@@ -1,0 +1,31 @@
+{
+  "name": "octokit-fetch-all-repos",
+  "version": "1.0.2",
+  "description": "Fetch all repos for a GitHub org/user/team, including/excluding archived, forked etc",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "eslint *.js",
+    "lint-fix": "eslint --fix *.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mheap/octokit/plugin-fetch-repos"
+  },
+  "keywords": [
+    "github",
+    "octokit",
+    "plugin",
+    "repositories"
+  ],
+  "author": "Michael Heap <m@michaelheap.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@octokit/rest": "^18.0.6",
+    "eslint": "^7.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.6.1",
+    "nock": "^13.0.4",
+    "prettier": "^2.1.2"
+  }
+}
