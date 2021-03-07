@@ -1,6 +1,6 @@
 {
   "name": "octokit-fetch-all-repos",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Fetch all repos for a GitHub org/user/team, including/excluding archived, forked etc",
   "main": "index.js",
   "scripts": {
