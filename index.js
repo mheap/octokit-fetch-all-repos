@@ -1,5 +1,7 @@
-const plugin = require("./fetch-repos.js");
+import plugin from "./fetch-repos.js";
 
 module.exports = function (octokit) {
-  octokit.repos.fetchAll = plugin.bind(null, octokit);
+  return {
+    fetchAllRepos: plugin.bind(null, octokit),
+  };
 };

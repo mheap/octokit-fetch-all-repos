@@ -20,7 +20,7 @@ const octokit = new Octokit({
 
 // Values in capitals are the default behaviour
 // Only `owner` is required
-const repos = await octokit.repos.fetchAll({
+const repos = await octokit.fetchAllRepos({
   owner: "user OR org OR org/team",
   visibility: "ALL/public/private",
   minimum_access: "PULL/push/admin",
