@@ -1,4 +1,4 @@
-module.exports = function (octokit, opts) {
+export default function (octokit, opts) {
   return new Promise(async (resolve, reject) => {
     opts = {
       visibility: "all",

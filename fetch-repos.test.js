@@ -1,9 +1,14 @@
-const plugin = require("./fetch-repos");
-const { Octokit } = require("@octokit/rest");
+import plugin from "./fetch-repos";
+import { Octokit } from "@octokit/rest";
+import nock from "nock";
 
-const nock = require("nock");
 nock.disableNetConnect();
-const octokit = new Octokit();
+const octokit = new Octokit({
+  "log": {
+    "error": () => { },
+  }
+});
+
 
 function run(body) {
   return plugin(octokit, body);
