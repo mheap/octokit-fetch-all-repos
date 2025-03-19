@@ -108,7 +108,7 @@ export default function (octokit, opts) {
 
       if (!is_org && team) {
         throw new Error(
-          "The provided 'owner' is not an organization, and so can not have teams"
+          "The provided 'owner' is not an organization, and so can not have teams",
         );
       }
 
@@ -120,4 +120,4 @@ export default function (octokit, opts) {
       throw e;
     }
   }
-};
+}
