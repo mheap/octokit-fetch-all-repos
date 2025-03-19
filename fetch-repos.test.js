@@ -1,9 +1,13 @@
-const plugin = require("./fetch-repos");
-const { Octokit } = require("@octokit/rest");
+import plugin from "./fetch-repos";
+import { Octokit } from "@octokit/rest";
+import nock from "nock";
 
-const nock = require("nock");
 nock.disableNetConnect();
-const octokit = new Octokit();
+const octokit = new Octokit({
+  log: {
+    error: () => {},
+  },
+});
 
 function run(body) {
   return plugin(octokit, body);
@@ -18,7 +22,7 @@ test(`owner does not exist`, async () => {
   mockGetUser(owner, null);
 
   await expect(run({ owner })).rejects.toEqual(
-    `The user/org '${owner}' could not be found`
+    `The user/org '${owner}' could not be found`,
   );
 });
 
@@ -27,7 +31,7 @@ test(`team requested, but user is not an org`, async () => {
   mockGetUser("valid-user", "User");
 
   await expect(run({ owner })).rejects.toEqual(
-    `The provided 'owner' is not an organization, and so can not have teams`
+    `The provided 'owner' is not an organization, and so can not have teams`,
   );
 });
 
@@ -76,7 +80,7 @@ test(`runs with defaults`, async () => {
   await expect(
     run({
       owner: "mheap",
-    })
+    }),
   ).resolves.toEqual([
     publicRepo,
     privateRepo,
@@ -94,7 +98,7 @@ test(`can disable forks`, async () => {
     run({
       owner: "mheap",
       include_forks: false,
-    })
+    }),
   ).resolves.toEqual([]);
 });
 
@@ -105,7 +109,7 @@ test(`allows archived`, async () => {
     run({
       owner: "mheap",
       include_archived: true,
-    })
+    }),
   ).resolves.toEqual([archivedRepo]);
 });
 
@@ -116,7 +120,7 @@ test(`allows templates`, async () => {
     run({
       owner: "mheap",
       include_templates: true,
-    })
+    }),
   ).resolves.toEqual([templateRepo]);
 });
 
@@ -127,7 +131,7 @@ test(`filters to only public`, async () => {
     run({
       owner: "mheap",
       visibility: "public",
-    })
+    }),
   ).resolves.toEqual([publicRepo]);
 });
 
@@ -138,7 +142,7 @@ test(`filters to only private`, async () => {
     run({
       owner: "mheap",
       visibility: "private",
-    })
+    }),
   ).resolves.toEqual([privateRepo]);
 });
 
@@ -149,7 +153,7 @@ test(`permissions: pull (success)`, async () => {
     run({
       owner: "mheap",
       minimum_access: "pull",
-    })
+    }),
   ).resolves.toEqual([repoWithPull]);
 });
 
@@ -160,7 +164,7 @@ test(`permissions: push (success)`, async () => {
     run({
       owner: "mheap",
       minimum_access: "push",
-    })
+    }),
   ).resolves.toEqual([repoWithPush]);
 });
 
@@ -171,7 +175,7 @@ test(`permissions: pull (success)`, async () => {
     run({
       owner: "mheap",
       minimum_access: "admin",
-    })
+    }),
   ).resolves.toEqual([repoWithAdmin]);
 });
 
@@ -182,7 +186,7 @@ test(`permissions: pull (no auth, implicitly allowed)`, async () => {
     run({
       owner: "mheap",
       minimum_access: "pull",
-    })
+    }),
   ).resolves.toEqual([publicRepo]);
 });
 
@@ -193,7 +197,7 @@ test(`permissions: pull (no auth, implicitly disallowed)`, async () => {
     run({
       owner: "mheap",
       minimum_access: "push",
-    })
+    }),
   ).resolves.toEqual([]);
 });
 
@@ -204,7 +208,7 @@ test(`permissions: push (failure)`, async () => {
     run({
       owner: "mheap",
       minimum_access: "push",
-    })
+    }),
   ).resolves.toEqual([]);
 });
 
@@ -215,7 +219,7 @@ test(`permissions: admin (failure)`, async () => {
     run({
       owner: "mheap",
       minimum_access: "admin",
-    })
+    }),
   ).resolves.toEqual([]);
 });
 
@@ -226,7 +230,7 @@ test(`permissions: minimum_access is case insensitive`, async () => {
     run({
       owner: "mheap",
       minimum_access: "ADMIN",
-    })
+    }),
   ).resolves.toEqual([repoWithAdmin]);
 });
 
@@ -254,7 +258,7 @@ function mockGetOrgRepos(owner, repos) {
 
 function mockGetTeamRepos(owner, team_slug, repos) {
   const m = nock("https://api.github.com").get(
-    `/orgs/${owner}/teams/${team_slug}/repos`
+    `/orgs/${owner}/teams/${team_slug}/repos`,
   );
   return m.reply(200, repos);
 }

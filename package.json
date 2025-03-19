@@ -2,9 +2,10 @@
   "name": "octokit-fetch-all-repos",
   "version": "1.0.6",
   "description": "Fetch all repos for a GitHub org/user/team, including/excluding archived, forked etc",
-  "main": "index.js",
+  "type": "module",
+  "exports": "./index.js",
   "scripts": {
-    "test": "jest",
+    "test": "cross-env NODE_OPTIONS=--experimental-vm-modules NODE_NO_WARNINGS=1 jest",
     "lint": "eslint *.js",
     "lint-fix": "eslint --fix *.js"
   },
@@ -21,11 +22,12 @@
   "author": "Michael Heap <m@michaelheap.com>",
   "license": "MIT",
   "devDependencies": {
-    "@octokit/rest": "^18.3.4",
-    "eslint": "^7.21.0",
-    "eslint-plugin-prettier": "^3.3.1",
-    "jest": "^26.6.3",
-    "nock": "^13.0.10",
-    "prettier": "^2.2.1"
+    "@octokit/rest": "^21.1.1",
+    "cross-env": "^7.0.3",
+    "eslint": "^9.22.0",
+    "eslint-plugin-prettier": "^5.2.3",
+    "jest": "^29.7.0",
+    "nock": "^14.0.1",
+    "prettier": "^3.5.3"
   }
 }

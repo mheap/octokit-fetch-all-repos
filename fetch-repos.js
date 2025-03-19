@@ -1,4 +1,4 @@
-module.exports = function (octokit, opts) {
+export default function (octokit, opts) {
   return new Promise(async (resolve, reject) => {
     opts = {
       visibility: "all",
@@ -108,7 +108,7 @@ module.exports = function (octokit, opts) {
 
       if (!is_org && team) {
         throw new Error(
-          "The provided 'owner' is not an organization, and so can not have teams"
+          "The provided 'owner' is not an organization, and so can not have teams",
         );
       }
 
@@ -120,4 +120,4 @@ module.exports = function (octokit, opts) {
       throw e;
     }
   }
-};
+}
